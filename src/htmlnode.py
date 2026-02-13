@@ -29,3 +29,15 @@ class HTMLNode:
             return f"(Tag: {self.tag}, Value: \"{self.value}\", Children: {self.children}, Props: {self.props})"
         else:
             return f"(Tag: {self.tag}, Value: {self.value}, Children: {self.children}, Props: {self.props})"
+        
+    def __eq__(self, other: HTMLNode) -> bool: # pyright: ignore[reportIncompatibleMethodOverride]
+        self_vars = vars(self)
+        other_vars = vars(other)
+
+        for key in self_vars:
+            if key not in other_vars or eval(f"self.{key}") != eval(f"other.{key}"):
+                return False
+        for key in other_vars:
+            if key not in self_vars or eval(f"other.{key}") != eval(f"self.{key}"):
+                return False
+        return True
