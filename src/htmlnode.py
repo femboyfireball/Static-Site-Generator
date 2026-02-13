@@ -1,11 +1,18 @@
 class HTMLNode:
-    def __init__(self, tag: str | None = None, value: str | None = None, children: list[HTMLNode] | None = None, props: dict[str, str] | None = None):
+    def __init__(self, value: str | None = None, tag: str | None = None, children: list[HTMLNode] | None = None, props: dict[str, str] | None = None):
+
+        """
+        A Node with no tag is rendered as plain text
+        A Node with no value is *assumed* to have children
+        A Node with no children is *assumed* to have a value
+        A Node with no props has no styling
+        """
         self.tag = tag
         self.value = value
         self.children = children
         self.props = props
     
-    def to_html(self) -> None:
+    def to_html(self) -> str:
         raise NotImplementedError()
     
     def props_to_html(self) -> str:
